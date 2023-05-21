@@ -1,0 +1,30 @@
+USE mytables;
+
+CREATE TABLE person (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(50) NOT NULL, age iNT NOT NULL, email VARCHAR(50) NOT NULL, PRIMARY KEY (id));
+	
+CREATE TABLE address (id INT NOT NULL AUTO_INCREMENT, person_id INT NOT NULL, street VARCHAR(50) NOT NULL, city VARCHAR(50) NOT NULL, county VARCHAR(50) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (person_id) REFERENCES person(id));
+	
+SHOW tables;
+
+SELECT * FROM person;
+
+INSERT INTO person (name, age, email) VALUES ('John', 25, 'john@example.com'), ('Jane', 30, 'jane@example.com'), ('Bob', 45, 'bob@example.com'), ('Alice', 35, 'alice@example.com');
+	
+INSERT INTO address (person_id, street, city, county) VALUES (1, '123 main St', 'Anytown', 'Anycounty'),(2, '456 Oak St', 'Somecity','Somecounty'),(3, '789 Elm St', 'Othercity','Othercounty'),(4, '321 Pine St', 'Anothercity','Anothercounty');
+
+SELECT * FROM person j;
+
+SELECT * FROM person j JOIN address a WHERE p.id = a.person_id;
+
+UPDATE address SET street = 'college lane', city = 'gort', country = 'galway' WHERE person_id = (SELECT id FROM person WHERE email = 'john@example.com');
+
+START TRANSACTION;
+
+INSERT INTO person (name, age, email) VALUES ('John Doe', 25, 'john.doe@example.com');
+
+SET @person_id = LAST_INSERT_ID();
+
+INSERT INTO address (person_id, street, city, county) VALUES (@person_id, '123 Main St', 'Anytown', 'Anycountry');
+
+COMMIT;
+
